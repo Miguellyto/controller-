@@ -30,10 +30,10 @@ session_start();
     return document.getElementById( el );
   }
   window.onload = function(){
-    id('fone').onkeyup = function(){
+    id('cell').onkeyup = function(){
       mascara( this, mtel );
     }
-    id('fone2').onkeyup = function(){
+    id('fonegerencia').onkeyup = function(){
       mascara( this, mtel );
     }
   }
@@ -66,7 +66,80 @@ session_start();
    }
   </style>
 
+ <!-- Adicionando Javascript -->
+ <script type="text/javascript" >
+    
+    function limpa_formulário_cep() {
+            //Limpa valores do formulário de cep.
+            document.getElementById('endereco').value=("");
+            document.getElementById('bairro').value=("");
+            document.getElementById('cidade').value=("");
+            document.getElementById('uf').value=("");
+            // document.getElementById('ibge').value=("");
+    }
+
+    function meu_callback(conteudo) {
+        if (!("erro" in conteudo)) {
+            //Atualiza os campos com os valores.
+            document.getElementById('endereco').value=(conteudo.logradouro);
+            document.getElementById('bairro').value=(conteudo.bairro);
+            document.getElementById('cidade').value=(conteudo.localidade);
+            document.getElementById('uf').value=(conteudo.uf);
+            // document.getElementById('ibge').value=(conteudo.ibge);
+        } //end if.
+        else {
+            //CEP não Encontrado.
+            limpa_formulário_cep();
+            alert("CEP não encontrado.");
+        }
+    }
+        
+    function pesquisacep(valor) {
+
+        //Nova variável "cep" somente com dígitos.
+        var cep = valor.replace(/\D/g, '');
+
+        //Verifica se campo cep possui valor informado.
+        if (cep != "") {
+
+            //Expressão regular para validar o CEP.
+            var validacep = /^[0-9]{8}$/;
+
+            //Valida o formato do CEP.
+            if(validacep.test(cep)) {
+
+                //Preenche os campos com "..." enquanto consulta webservice.
+                document.getElementById('endereco').value="...";
+                document.getElementById('bairro').value="...";
+                document.getElementById('cidade').value="...";
+                document.getElementById('uf').value="...";
+                // document.getElementById('ibge').value="...";
+
+                //Cria um elemento javascript.
+                var script = document.createElement('script');
+
+                //Sincroniza com o callback.
+                script.src = '//viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
+
+                //Insere script no documento e carrega o conteúdo.
+                document.body.appendChild(script);
+
+            } //end if.
+            else {
+                //cep é inválido.
+                limpa_formulário_cep();
+                alert("Formato de CEP inválido.");
+            }
+        } //end if.
+        else {
+            //cep sem valor, limpa formulário.
+            limpa_formulário_cep();
+        }
+    };
+    </script>
+
 	</head>
+
 	<body>
 	<nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -153,7 +226,8 @@ session_start();
 		<!-- <form method="POST" action="proc_cad_filial.php"> -->
 			
 	<div class="container">
-   	<form class="form-horizontal form" method="POST" name="form1" action="proc_cad_filial.php" enctype="multipart/form-data">
+   	<form class="form-horizontal form" method="POST" name="form1" action="proc_cad_filial.php">
+   	<!-- <form class="form-horizontal form" method="POST" name="form1" action="proc_cad_filial.php" enctype="multipart/form-data"> -->
 	<fieldset>
    
    <!-- Título do formulário -->
@@ -161,10 +235,10 @@ session_start();
    
    <!-- Campo: Código -->
    <div class="form-group">
-	 <label class="col-md-4 control-label" for="cod">Código</label>
+	 <label class="col-md-4 control-label" for="id">Código</label>
 	 
    <div class="col-md-4">
-	 <input id="cod" name="cod" placeholder="Código da Filial" class="form-control input-md" required="" type="text">
+	 <input id="id" name="id" placeholder="Código da Filial" class="form-control input-md" required="" type="text">
    </div>
    </div>
    
@@ -177,12 +251,21 @@ session_start();
   </div>
   </div>
   
-  <!-- Campo: Endereço -->
-   <div class="form-group">
-	<label class="col-md-4 control-label" for="end">Endereço</label>
+    <!-- Campo: CEP -->
+    <div class="form-group">
+	<label class="col-md-4 control-label" for="cep">CEP</label>
 	
   <div class="col-md-4">
-	<input id="end" name="end" placeholder="Endereço da Filial" class="form-control input-md" required="" type="text">
+	<input id="cep" name="cep" placeholder="CEP da Filial" class="form-control input-md" required="" type="text" onblur="pesquisacep(this.value);">
+  </div>
+  </div>
+
+  <!-- Campo: Endereço -->
+   <div class="form-group">
+	<label class="col-md-4 control-label" for="endereco">Endereço</label>
+	
+  <div class="col-md-4">
+	<input id="endereco" name="endereco" placeholder="Endereço da Filial" class="form-control input-md" required="" type="text">
   </div>
   </div>
   
@@ -192,15 +275,6 @@ session_start();
 	
   <div class="col-md-4">
 	<input id="bairro" name="bairro" placeholder="Bairro da Filial" class="form-control input-md" required="" type="text">
-  </div>
-  </div>
-  
-  <!-- Campo: CEP -->
-   <div class="form-group">
-	<label class="col-md-4 control-label" for="cep">CEP</label>
-	
-  <div class="col-md-4">
-	<input id="cep" name="cep" placeholder="CEP da Filial" class="form-control input-md" required="" type="text">
   </div>
   </div>
   
@@ -224,22 +298,22 @@ session_start();
    
 	<!-- Campo: Fone class="form-control phone-ddd-mask"-->
    <div class="form-group">
-	 <label class="col-md-4 control-label" for="fone">Celular</label>  
+	 <label class="col-md-4 control-label" for="cell">Celular</label>  
    <div class="col-md-4">
-  <input id="fone" name="fone" class="form-control input-md" placeholder="Telefone Celular" required="" type="tel" maxlength="15">
+  <input id="cell" name="cell" class="form-control input-md" placeholder="Telefone Celular" required="" type="tel" maxlength="15">
    </div>
    </div>
    
 	<!-- Campo: Fone class="form-control phone-ddd-mask"-->
    <div class="form-group">
-	 <label class="col-md-4 control-label" for="fone2">Fone Gerência</label>  
+	 <label class="col-md-4 control-label" for="fonegerencia">Fone Gerência</label>  
    <div class="col-md-4">
-  <input id="fone2" name="fone2" class="form-control input-md" placeholder="Telefone Gerência" required="" type="tel" maxlength="15">
+  <input id="fonegerencia" name="fonegerencia" class="form-control input-md" placeholder="Telefone Gerência" required="" type="tel" maxlength="15">
    </div>
    </div>
    
    <div class="form-group">
-	 <label class="col-md-4 control-label" for="nomeg">Status</label>  
+	 <label class="col-md-4 control-label" for="status">Status</label>  
    <div class="col-md-4">
   <input id="status" name="status" class="form-control input-md" placeholder="Status" required="">
    </div>

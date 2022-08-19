@@ -110,22 +110,23 @@ include_once("conexao.php");
 		$result_filial = "SELECT * FROM filial LIMIT $inicio, $qnt_result_pg";
 		$resultado_filial = mysqli_query($conn, $result_filial);
 		while($row_filial = mysqli_fetch_assoc($resultado_filial)){
-			echo "Código: " . $row_filial['cod'] . "<br>";
+			echo "Código: " . $row_filial['id'] . "<br>";
 			echo "Nome: " . $row_filial['nome'] . "<br>";
+			echo "CEP: " . $row_filial['cep'] . "<br>";
 			echo "Endereço: " . $row_filial['endereco'] . "<br>";
 			echo "Bairro: " . $row_filial['bairro'] . "<br>";
 			echo "Cidade: " . $row_filial['cidade'] . "<br>";
-			echo "CEP: " . $row_filial['cep'] . "<br>";
 			echo "UF: " . $row_filial['uf'] . "<br>";
 			echo "Celular: " . $row_filial['cell'] . "<br>";
-			echo "Fone Gerência: " . $row_filial['fonegerancia'] . "<br>";
+			echo "Fone Gerência: " . $row_filial['fonegerencia'] . "<br>";
 			echo "Status: " . $row_filial['statusfilial'] . "<br>";
-			echo "<a href='edit_filial.php?cod=" . $row_filial['cod'] . "'>Editar</a><br>";
-			echo "<a href='proc_apagar_filial.php?cod=" . $row_filial['cod'] . "'>Apagar</a><br><hr>";
+
+			echo "<a href='edit_filial.php?id=" . $row_filial['id'] . "'>Editar</a><br>";
+			echo "<a href='proc_apagar_filial.php?id=" . $row_filial['id'] . "'>Apagar</a><br><hr>";
 		}
 		
 		//Paginção - Somar a quantidade de usuários
-		$result_pg = "SELECT COUNT(cod) AS num_result FROM filial";
+		$result_pg = "SELECT COUNT(id) AS num_result FROM filial";
 		$resultado_pg = mysqli_query($conn, $result_pg);
 		$row_pg = mysqli_fetch_assoc($resultado_pg);
 		//echo $row_pg['num_result'];

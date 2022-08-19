@@ -1,8 +1,8 @@
 <?php
 session_start();
 include_once("conexao.php");
-$cod = filter_input(INPUT_GET, 'cod', FILTER_SANITIZE_NUMBER_INT);
-$result_filial = "SELECT * FROM filial WHERE cod = '$cod'";
+$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+$result_filial = "SELECT * FROM filial WHERE id = '$id'";
 $resultado_filial = mysqli_query($conn, $result_filial);
 $row_filial = mysqli_fetch_assoc($resultado_filial);
 ?>
@@ -164,10 +164,10 @@ $row_filial = mysqli_fetch_assoc($resultado_filial);
    
    <!-- Campo: Código -->
    <div class="form-group">
-	 <label class="col-md-4 control-label" for="cod">Código</label>
+	 <label class="col-md-4 control-label" for="id">Código</label>
 	 
    <div class="col-md-4">
-	 <input id="cod" name="cod" placeholder="Código da Filial" class="form-control input-md" required="" type="text" value="<?php echo $row_filial['cod']; ?>">
+	 <input id="id" name="id" placeholder="Código da Filial" class="form-control input-md" required="" type="text" value="<?php echo $row_filial['id']; ?>">
    </div>
    </div>
    
@@ -180,12 +180,21 @@ $row_filial = mysqli_fetch_assoc($resultado_filial);
   </div>
   </div>
   
-  <!-- Campo: Endereço -->
-   <div class="form-group">
-	<label class="col-md-4 control-label" for="end">Endereço</label>
+      <!-- Campo: CEP -->
+  <div class="form-group">
+	<label class="col-md-4 control-label" for="cep">CEP</label>
 	
   <div class="col-md-4">
-	<input id="end" name="end" placeholder="Endereço da Filial" class="form-control input-md" required="" type="text" value="<?php echo $row_filial['endereco']; ?>">
+	<input id="cep" name="cep" placeholder="CEP da Filial" class="form-control input-md" required="" type="text" value="<?php echo $row_filial['endereco']; ?>">
+  </div>
+  </div>
+
+  <!-- Campo: Endereço -->
+   <div class="form-group">
+	<label class="col-md-4 control-label" for="endereco">Endereço</label>
+	
+  <div class="col-md-4">
+	<input id="endereco" name="endereco" placeholder="Endereço da Filial" class="form-control input-md" required="" type="text" value="<?php echo $row_filial['endereco']; ?>">
   </div>
   </div>
   
@@ -195,15 +204,6 @@ $row_filial = mysqli_fetch_assoc($resultado_filial);
 	
   <div class="col-md-4">
 	<input id="bairro" name="bairro" placeholder="Bairro da Filial" class="form-control input-md" required="" type="text" value="<?php echo $row_filial['bairro']; ?>">
-  </div>
-  </div>
-  
-  <!-- Campo: CEP -->
-   <div class="form-group">
-	<label class="col-md-4 control-label" for="cep">CEP</label>
-	
-  <div class="col-md-4">
-	<input id="cep" name="cep" placeholder="CEP da Filial" class="form-control input-md" required="" type="text" value="<?php echo $row_filial['cep']; ?>">
   </div>
   </div>
   
@@ -227,22 +227,22 @@ $row_filial = mysqli_fetch_assoc($resultado_filial);
    
 	<!-- Campo: Fone class="form-control phone-ddd-mask"-->
    <div class="form-group">
-	 <label class="col-md-4 control-label" for="fone">Celular</label>  
+	 <label class="col-md-4 control-label" for="cell">Celular</label>  
    <div class="col-md-4">
-  <input id="fone" name="fone" class="form-control input-md" placeholder="Telefone Celular" required="" type="tel"maxlength="15" value="<?php echo $row_filial['cell']; ?>">
+  <input id="cell" name="cell" class="form-control input-md" placeholder="Telefone Celular" required="" type="tel"maxlength="15" value="<?php echo $row_filial['cell']; ?>">
    </div>
    </div>
    
 	<!-- Campo: Fone class="form-control phone-ddd-mask"-->
    <div class="form-group">
-	 <label class="col-md-4 control-label" for="fone">Fone Gerência</label>  
+	 <label class="col-md-4 control-label" for="fonegerencia">Fone Gerência</label>  
    <div class="col-md-4">
-  <input id="fone" name="fone" class="form-control input-md" placeholder="Telefone Gerência" required="" type="tel"maxlength="15" value="<?php echo $row_filial['fonegerancia']; ?>">
+  <input id="fonegerencia" name="fonegerencia" class="form-control input-md" placeholder="Telefone Gerência" required="" type="tel"maxlength="15" value="<?php echo $row_filial['fonegerencia']; ?>">
    </div>
    </div>
 
    <div class="form-group">
-	 <label class="col-md-4 control-label" for="nomeg">Status</label>  
+	 <label class="col-md-4 control-label" for="status">Status</label>  
    <div class="col-md-4">
   <input id="status" name="status" class="form-control input-md" placeholder="Status" required="" value="<?php echo $row_filial['statusfilial']; ?>">
    </div>
