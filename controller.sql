@@ -28,15 +28,15 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `filial` (
-  `cod` int(5) NOT NULL,
-  `nome` varchar(150) NOT NULL,
+  `id` int(5) NOT NULL,
+  `nome` varchar(90) NOT NULL,
+  `cep` varchar(9) NOT NULL,
   `endereco` varchar(150) NOT NULL,
-  `bairro` varchar(20) NOT NULL,
-  `cep` decimal(9,0) NOT NULL,
+  `bairro` varchar(50) NOT NULL,
   `cidade` varchar(50) NOT NULL,
   `uf` varchar(2) NOT NULL,
-  `cell` varchar(11) NOT NULL,
-  `fonegerancia` varchar(11) NOT NULL,
+  `cell` varchar(15) NOT NULL,
+  `fonegerencia` varchar(15) NOT NULL,
   `statusfilial` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -56,7 +56,7 @@ INSERT INTO `filial` (`cod`, `nome`, `endereco`, `bairro`, `cep`, `cidade`, `uf`
 --
 
 CREATE TABLE `usuarios` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(220) COLLATE utf8mb4_unicode_ci NOT NULL,
   `usuario` varchar(220) COLLATE utf8mb4_unicode_ci NOT NULL,
   `senha_usuario` varchar(220) COLLATE utf8mb4_unicode_ci NOT NULL

@@ -1,7 +1,7 @@
 <?php
 $servidor = "localhost";
 $usuario = "root";
-$senha = "root";
+$senha = "";
 $dbname = "controller";
 
 //Criar a conexao
